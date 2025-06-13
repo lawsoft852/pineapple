@@ -1,28 +1,37 @@
-{
-  "name": "LawSoft LPMS Development",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:18-bullseye",
-  "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
-  },
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "ms-vscode.vscode-typescript-next",
-        "esbenp.prettier-vscode",
-        "ms-vscode.vscode-eslint",
-        "ms-vscode.vscode-json",
-        "formulahendry.auto-rename-tag",
-        "christian-kohler.path-intellisense",
-        "rangav.vscode-thunder-client"
-      ],
-      "settings": {
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "typescript.preferences.importModuleSpecifier": "relative"
-      }
-    }
-  },
-  "forwardPorts": [3000, 3001, 5432],
-  "postCreateCommand": "echo '🚀 LawSoft LPMS Development Environment Ready! Run ./setup.sh to get started!'",
-  "remoteUser": "node"
-}
+version: '3.8'
+
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/typescript-node:18-bullseye
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+    network_mode: service:db
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: lawsoft
+      POSTGRES_USER: lawsoft_user
+      POSTGRES_PASSWORD: lawsoft123
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres-data:
+  redis-data:
