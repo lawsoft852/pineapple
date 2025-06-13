@@ -2,8 +2,7 @@
   "name": "LawSoft LPMS Development",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:18-bullseye",
   "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
-    "ghcr.io/devcontainers/features/github-cli:1": {}
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
   "customizations": {
     "vscode": {
@@ -11,7 +10,7 @@
         "ms-vscode.vscode-typescript-next",
         "esbenp.prettier-vscode",
         "ms-vscode.vscode-eslint",
-        "bradlc.vscode-tailwindcss",
+        "ms-vscode.vscode-json",
         "formulahendry.auto-rename-tag",
         "christian-kohler.path-intellisense",
         "rangav.vscode-thunder-client"
@@ -23,7 +22,7 @@
       }
     }
   },
-  "forwardPorts": [3000, 3001, 5432, 6379],
-  "postCreateCommand": "echo '🚀 LawSoft LPMS Development Environment Ready!'",
+  "forwardPorts": [3000, 3001, 5432],
+  "postCreateCommand": "echo '🚀 LawSoft LPMS Development Environment Ready! Run ./setup.sh to get started!'",
   "remoteUser": "node"
 }
